@@ -1,0 +1,49 @@
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+
+
+<h1 style="text-align: center;color: chartreuse;">DebtPatrol</h1>
+<p>Razvan has uid 1</p>
+<p>Vlad has uid 2</p>
+<h1>Add Data</h1>
+<form method="POST">
+    <label>User ID:</label><br />
+    <input type="text" name="uid"><br />
+    <label>Purchase title:</label><br />
+    <input type="text" name="title"><br />
+    <label>Sum to add:</label><br />
+    <input type="text" name="sum"><br />
+    <input type="submit">
+</form>
+
+<h3>
+    {{.Uid1_data}}
+</h3>
+<h3>
+    {{.Uid2_data}}
+</h3>
+<br>
+<table>
+    {{range .Logs}}
+        <tr>
+            <td>{{.Name}}</td>
+            <td>{{.Title}}</td>
+            <td>{{.Sum}} RON</td>
+            <td>{{.Time}}</td>
+        </tr>
+    {{end}}
+</table>

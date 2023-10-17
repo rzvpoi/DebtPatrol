@@ -64,6 +64,8 @@ func main() {
 		tmpl.Execute(w, data)
 	})
 
+	http.Handle("/assets/images/", http.StripPrefix("/assets/images/", http.FileServer(http.Dir("assets"))))
+
 	log.Print("Listening on :8082...")
 	http.ListenAndServe(":8082", nil)
 }

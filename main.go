@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -23,6 +24,10 @@ type ContactDetails struct {
 
 func main() {
 	tmpl := template.Must(template.ParseFiles("patrolu.html"))
+
+	fs := http.FileServer(http.Dir(".\assets\\"))
+
+	http.Handle("/assets/", http.StripPrefix("/static", fs))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		logs, uid1_data, uid2_data := readData()
@@ -47,8 +52,6 @@ func main() {
 		}
 
 		// do something with details
-		fmt.Print("POST:")
-		fmt.Println(details)
 		writeData(details)
 
 		logs, uid1_data, uid2_data = readData()
@@ -61,6 +64,7 @@ func main() {
 		tmpl.Execute(w, data)
 	})
 
+	log.Print("Listening on :8082...")
 	http.ListenAndServe(":8082", nil)
 }
 
@@ -118,9 +122,12 @@ func readData() ([]ContactDetails, string, string) {
 
 	// Process the records
 	var detail []ContactDetails
-	for _, record := range records {
+	for idx, record := range records {
 		if len(record) != 5 {
 			fmt.Println("Malformed record:", record)
+			continue
+		}
+		if idx == 0 {
 			continue
 		}
 
@@ -146,10 +153,7 @@ func readData() ([]ContactDetails, string, string) {
 			sum_id2 += sum
 		}
 
-		fmt.Println(data.Name, data.Time)
-
 	}
-	fmt.Println("Razvan has to give Vlad " + strconv.Itoa(sum_id2/2))
-	fmt.Println("Vlad has to give Razvan " + strconv.Itoa(sum_id1/2))
-	return detail, "Razvan has to give Vlad: " + strconv.Itoa(sum_id2/2) + " RON", "Vlad has to give Razvan: " + strconv.Itoa(sum_id1/2) + " RON"
+
+	return detail, strconv.Itoa(sum_id2 / 2), strconv.Itoa(sum_id1 / 2)
 }

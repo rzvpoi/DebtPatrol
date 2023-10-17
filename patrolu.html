@@ -1,49 +1,135 @@
-<style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styles/styles.css">
+    </head>
+    <body>
+        
+        <header class="header">
+            <div class="title-wrapper">
+                <h1 class="main-title">Debt Patrol</h1>
+                <h6 class="version">V1.1</h6>
+            </div>
 
-    th, td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: left;
-    }
+            <p class="date" id="current-date"></p>
 
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-</style>
+            <div class="owe-reminder-wrapper">
+                <h2 class="restante">Restante</h2>
+
+                <div class="owe-reminder">
+                    <div class="owe-person">
+                        <img src="./assets//images/vlad.png" alt="vlad" class="image">
+                        
+                        <h2 class="owe-value"  id="owe-value-vlad">{{.Uid1_data}}</h2>
+                    </div>
+    
+                    <div class="owe-person">
+                        <img src="./assets//images/razvan.png" alt="razvan" class="image">
+                        
+                        <h2 class="owe-value" id="owe-value-razvan">{{.Uid2_data}}</h2>
+                    </div>
+                </div>     
+            </div>
+        </header>
+
+        <!-- <p>Razvan has uid 1</p>
+        <p>Vlad has uid 2</p> -->
+        <main class="main">
+            <div class="add-button" id="page-button">+</div>
+            <input type="hidden" name="uid" id="user-id">
+        
+            <articel class="history-wrapper">
+
+                {{range .Logs}}
+                    <div class="history-element">
+                        <div class="history-details">
+                            <img src="./assets/images/vlad.png" class="history-image image" alt="">
+                            
+
+                            <div class="history-text">
+                                <h2>{{.Title}}</h2>
+                                <p>{{.Time}}</p>
+                            </div>
+                        </div>
+
+                        <h1 class="history-value">{{.Sum}}RON</h1>
+                    </div>
+                {{end}}
 
 
-<h1 style="text-align: center;color: chartreuse;">DebtPatrol</h1>
-<p>Razvan has uid 1</p>
-<p>Vlad has uid 2</p>
-<h1>Add Data</h1>
-<form method="POST">
-    <label>User ID:</label><br />
-    <input type="text" name="uid"><br />
-    <label>Purchase title:</label><br />
-    <input type="text" name="title"><br />
-    <label>Sum to add:</label><br />
-    <input type="text" name="sum"><br />
-    <input type="submit">
-</form>
+            </articel>
 
-<h3>
-    {{.Uid1_data}}
-</h3>
-<h3>
-    {{.Uid2_data}}
-</h3>
-<br>
-<table>
-    {{range .Logs}}
-        <tr>
-            <td>{{.Name}}</td>
-            <td>{{.Title}}</td>
-            <td>{{.Sum}} RON</td>
-            <td>{{.Time}}</td>
-        </tr>
-    {{end}}
-</table>
+            <article class="add-wrapper ">
+               <img src="./assets/images/textura.png" alt="" class="background-image">
+
+                <header class="users">
+                    <div class="user vlad user-active">
+                        <img src="./assets/images//vlad.png" alt="" class="user-image image">
+
+                        <h2 class="user-name">Vlad</h2>
+                    </div>
+
+                    <div class="user razvan">
+                        <img src="./assets/images//razvan.png" alt="" class="user-image image">
+
+                        <h2 class="user-name">Razvan</h2>
+                    </div>
+                </header>
+
+                <form action="" class="inputs">
+
+                    <div class="input">
+                        <input type="text" name="title" placeholder="Title" class="input-field title-input">
+                    </div>
+
+                    <div class="input">
+                        <input type="number" name="sum"  placeholder="Price" class="input-field title-input">
+                    </div>
+
+                    <button type="submit" class="add-form-button">Add +</button>
+                </form>
+
+            </article>
+        
+        </main>
+
+
+<!-- 
+            <h1>Add Data</h1>
+            <form method="POST">
+                <label>User ID:</label><br />
+                <input type="text" name="uid"><br />
+                <label>Purchase title:</label><br />
+                <input type="text" name="title"><br />
+                <label>Sum to add:</label><br />
+                <input type="text" name="sum"><br />
+                <input type="submit">
+            </form>
+
+            <h3>
+                {{.Uid1_data}}
+            </h3>
+            <h3>
+                {{.Uid2_data}}
+            </h3>
+            <br>
+            <table>
+                {{range .Logs}}
+                    <tr>
+                        <td>{{.Name}}</td>
+                        <td>{{.Title}}</td>
+                        <td>{{.Sum}} RON</td>
+                        <td>{{.Time}}</td>
+                    </tr>
+                {{end}}
+            </table> -->
+
+        
+        <script src="script.js" async defer></script>
+    </body>
+</html>

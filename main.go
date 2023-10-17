@@ -50,6 +50,7 @@ func main() {
 			Sum:   r.FormValue("sum"),
 			Time:  currentDate,
 		}
+		log.Print("uid before" + r.FormValue("uid"))
 
 		// do something with details
 		writeData(details)
@@ -82,10 +83,11 @@ func writeData(detail ContactDetails) {
 	writer := csv.NewWriter(file)
 
 	uid, _ := strconv.Atoi(detail.Uid)
+	log.Print(uid)
 	if uid == 1 {
-		detail.Name = "Razvan"
+		detail.Name = "razvan"
 	} else {
-		detail.Name = "Vlad"
+		detail.Name = "vlad"
 	}
 
 	// Write data rows

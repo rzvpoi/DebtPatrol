@@ -295,7 +295,7 @@ body {
         <header class="header">
             <div class="title-wrapper">
                 <h1 class="main-title">Debt Patrol</h1>
-                <h6 class="version">V1.1</h6>
+                <h6 class="version">V1.3</h6>
             </div>
 
             <p class="date" id="current-date"></p>
@@ -307,13 +307,13 @@ body {
                     <div class="owe-person">
                         <img src="./assets//images/vlad.png" alt="vlad" class="image">
                         
-                        <h2 class="owe-value"  id="owe-value-vlad">{{.Uid2_data}}</h2>
+                        <h2 class="owe-value"  id="owe-value-vlad">{{.Uid2_data}} RON</h2>
                     </div>
     
                     <div class="owe-person">
                         <img src="./assets//images/razvan.png" alt="razvan" class="image">
                         
-                        <h2 class="owe-value" id="owe-value-razvan">{{.Uid1_data}}</h2>
+                        <h2 class="owe-value" id="owe-value-razvan">{{.Uid1_data}} RON</h2>
                     </div>
                 </div>     
             </div>
@@ -323,16 +323,16 @@ body {
         <p>Vlad has uid 2</p> -->
         <main class="main">
             <div class="add-button" id="page-button">+</div>
-            <input type="hidden" name="uid" id="user-id">
+            
         
             <articel class="history-wrapper">
 
                 {{range .Logs}}
                     <div class="history-element">
                         <div class="history-details">
-                            <img src="./assets/images/vlad.png" class="history-image image" alt="">
-                            
-
+                            <img src="./assets/images/{{.Name}}.png"  class="history-image image" alt="">
+                          
+            
                             <div class="history-text">
                                 <h2>{{.Title}}</h2>
                                 <p>{{.Time}}</p>
@@ -364,7 +364,8 @@ body {
                 </header>
 
                 <form action="" method="POST" class="inputs">
-
+                    <input type="hidden" name="uid" id="user-id">
+                    
                     <div class="input">
                         <input type="text" name="title" placeholder="Title" class="input-field title-input">
                     </div>
@@ -384,51 +385,63 @@ body {
     
         <script>
             const button = document.getElementById("page-button");
-const addPage = document.querySelector(".add-wrapper");
+          const addPage = document.querySelector(".add-wrapper");
 
-const currentDate = document.getElementById("current-date")
+          const currentDate = document.getElementById("current-date")
+          const addFormBtn = document.querySelector(".add-form-button")
 
-const userId = document.getElementById('user-id')
-const userVlad = document.querySelector('.vlad')
-const userRazvan = document.querySelector('.razvan')
+          
+          const userId = document.getElementById('user-id')
+          const userVlad = document.querySelector('.vlad')
+          const userRazvan = document.querySelector('.razvan')
+          
+          const historyImages = document.querySelectorAll(".history-image")
+          
+          // // function updateImages() {
+          //   historyImages.forEach((image) => {
+          //     if(image.getAttribute("name") === 'razvan') {
+          //       image.src = "./assets/images/razvan.png"
+          //       console.log('awd');
+          //     }
+          //   })
+          
+          // addFormBtn.addEventListener('click', updateImages())
+          
+          // today date
+          const date = new Date();
+          const months = ["January","February","March","April","May","June","July",
+          "August","September","October","November","December"];
+          currentDate.innerText = `Today is ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`
 
+          // page switch
+          let ok = false;
+          button.addEventListener("click", () => {
+              addPage.classList.toggle('add-wrapper-active')
+              
+              if(!ok) {
+                  document.body.style.overflow = 'hidden'
+                  button.innerText = '-'
+              }else {
+                  document.body.style.overflow = 'auto'
+                  button.innerText = '+'
 
-// today date
-const date = new Date();
-const months = ["January","February","March","April","May","June","July",
-"August","September","October","November","December"];
-currentDate.innerText = `Today is ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`
+              }
 
-// page switch
-let ok = false;
-button.addEventListener("click", () => {
-    addPage.classList.toggle('add-wrapper-active')
-    
-    if(!ok) {
-        document.body.style.overflow = 'hidden'
-        button.innerText = '-'
-    }else {
-        document.body.style.overflow = 'auto'
-        button.innerText = '+'
+              ok = !ok;
+          })
 
-    }
+          userVlad.addEventListener("click", () => {
+              userId.value = 2;
+              userVlad.classList.add("user-active")
+              userRazvan.classList.remove("user-active")
+          })
 
-    ok = !ok;
-})
+          userRazvan.addEventListener("click", () => {
+              userId.value = 1;
 
-userVlad.addEventListener("click", () => {
-    userId.value = 2;
-
-    userVlad.classList.add("user-active")
-    userRazvan.classList.remove("user-active")
-})
-
-userRazvan.addEventListener("click", () => {
-    userId.value = 1;
-
-    userVlad.classList.remove("user-active")
-    userRazvan.classList.add("user-active")
-})
+              userVlad.classList.remove("user-active")
+              userRazvan.classList.add("user-active")
+          })
         </script>
     </body>
 </html>

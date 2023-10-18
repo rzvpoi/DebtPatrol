@@ -83,9 +83,9 @@ func writeData(detail ContactDetails) {
 
 	uid, _ := strconv.Atoi(detail.Uid)
 	if uid == 1 {
-		detail.Name = "Razvan"
+		detail.Name = "razvan"
 	} else {
-		detail.Name = "Vlad"
+		detail.Name = "vlad"
 	}
 
 	// Write data rows
@@ -103,7 +103,7 @@ func writeData(detail ContactDetails) {
 		panic(err)
 	}
 
-	fmt.Println("New data entry added!")
+	log.Print("New data entry added! Values: {" + detail.Name + ", " + detail.Sum + " RON }")
 }
 
 func readData() ([]ContactDetails, string, string) {
